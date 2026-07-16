@@ -5,10 +5,6 @@
 ### Optimización de rutas para entregas
 - Descripción: sistema para optimizar entregas usando geolocalización, rutas reales y asignación de repartidores.
 - Tecnologías: Python, Requests, Pandas, Folium, OpenStreetMap, OSRM.
-- Archivos relevantes:
-  - Downloads/Ruta_entrega_Floreria.py
-  - Downloads/rutas_floreria.py
-  - Desktop/AWS/routeiq/app/configs/config_floreria.json
 - ¿Por qué aparece en el portafolio?: demuestra lógica aplicada en logística, programación de algoritmos y procesamiento geoespacial.
 
 ## Proyectos complementarios
