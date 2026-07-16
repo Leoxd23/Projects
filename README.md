@@ -2,7 +2,7 @@
 
 ## Proyecto principal
 
-### Optimización de rutas para florería
+### Optimización de rutas para entregas
 - Descripción: sistema para optimizar entregas usando geolocalización, rutas reales y asignación de repartidores.
 - Tecnologías: Python, Requests, Pandas, Folium, OpenStreetMap, OSRM.
 - Archivos relevantes:
