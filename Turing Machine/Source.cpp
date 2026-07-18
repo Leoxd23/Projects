@@ -1,96 +1,142 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include <string>
 
-#define MAX_LEN 100
+using namespace std;
 
-char tape[MAX_LEN];
-char output[MAX_LEN * 10];
-int head = 0;
+constexpr int MAX_LEN = 100;
 
-void resetTape(const char* input) {
-    memset(tape, '_', sizeof(tape));
-    strncpy(tape, input, strlen(input));
-    head = 0;
-}
+class TuringMachine {
+private:
+    string tape;
+    string output;
+    int head = 0;
+    int state = 0;
 
-void appendStep(const char* step) {
-    strcat(output, step);
-    strcat(output, "\n");
-}
+    void resetTape(const string& input) {
+        tape.assign(MAX_LEN, '_');
+        for (int i = 0; i < static_cast<int>(input.size()) && i < MAX_LEN; ++i) {
+            tape[i] = input[i];
+        }
+        head = 0;
+        state = 0;
+    }
 
-int simulateTuringMachine(const char* input) {
-    resetTape(input);
-    output[0] = '\0';
-    int i, state = 0;
-    char step[200];
+    void appendStep(const string& step) {
+        output += step + '\n';
+    }
 
-    while (1) {
-        sprintf(step, "Estado: q%d | Cinta: ", state);
-        for (i = 0; i < strlen(tape); ++i)
-            sprintf(step + strlen(step), "%c ", tape[i]);
-        sprintf(step + strlen(step), "| Cabeza: %d", head);
-        appendStep(step);
+    string buildStepLine() const {
+        string step = "Estado: q" + to_string(state) + " | Cinta: ";
+        for (char ch : tape) {
+            step += ch;
+            step += ' ';
+        }
+        step += "| Cabeza: " + to_string(head);
+        return step;
+    }
 
-        switch (state) {
-        case 0:
-            if (tape[head] == 'a') {
-                tape[head] = 'X';
-                head++;
-                state = 1;
+public:
+    bool simulate(const string& input) {
+        resetTape(input);
+        output.clear();
+
+        while (true) {
+            appendStep(buildStepLine());
+
+            if (head < 0 || head >= static_cast<int>(tape.size())) {
+                return false;
             }
-            else if (tape[head] == 'X' || tape[head] == 'Y' || tape[head] == 'b' || tape[head] == '_') {
-                state = 4;
+
+            switch (state) {
+            case 0:
+                if (tape[head] == 'a') {
+                    tape[head] = 'X';
+                    ++head;
+                    state = 1;
+                }
+                else if (tape[head] == 'X' || tape[head] == 'Y' || tape[head] == 'b' || tape[head] == '_') {
+                    state = 4;
+                }
+                else {
+                    return false;
+                }
+                break;
+
+            case 1:
+                if (tape[head] == 'a' || tape[head] == 'X') {
+                    ++head;
+                }
+                else if (tape[head] == 'b') {
+                    state = 2;
+                }
+                else if (tape[head] == 'Y') {
+                    ++head;
+                }
+                else {
+                    return false;
+                }
+                break;
+
+            case 2:
+                if (tape[head] == 'b') {
+                    tape[head] = 'Y';
+                    state = 3;
+                    --head;
+                }
+                else if (tape[head] == 'Y') {
+                    ++head;
+                }
+                else {
+                    return false;
+                }
+                break;
+
+            case 3:
+                if (tape[head] == 'a' || tape[head] == 'X' || tape[head] == 'b' || tape[head] == 'Y') {
+                    --head;
+                }
+                else if (tape[head] == '_') {
+                    ++head;
+                    state = 0;
+                }
+                else {
+                    return false;
+                }
+                break;
+
+            case 4:
+                if (tape[head] == 'b' || tape[head] == 'Y') {
+                    ++head;
+                }
+                else if (tape[head] == '_') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+                break;
+
+            default:
+                return false;
             }
-            else return 0;
-            break;
-
-        case 1:
-            if (tape[head] == 'a' || tape[head] == 'X') head++;
-            else if (tape[head] == 'b') state = 2;
-            else if (tape[head] == 'Y') head++;
-            else if (tape[head] == '_') return 0;
-            else return 0;
-            break;
-
-        case 2:
-            if (tape[head] == 'b') {
-                tape[head] = 'Y';
-                state = 3;
-                head--;
-            }
-            else if (tape[head] == 'Y') head++;
-            else return 0;
-            break;
-
-        case 3:
-            if (tape[head] == 'a' || tape[head] == 'X' || tape[head] == 'b' || tape[head] == 'Y') head--;
-            else if (tape[head] == '_') {
-                head++;
-                state = 0;
-            }
-            else return 0;
-            break;
-
-        case 4:
-            if (tape[head] == 'b' || tape[head] == 'Y') head++;
-            else if (tape[head] == '_') return 1;
-            else return 0;
-            break;
-
-        default: return 0;
         }
     }
-    return 0;
-}
+
+    string getOutput() const {
+        return output;
+    }
+};
 
 int main() {
-    char input[100];
-    printf("Ingrese una cadena: ");
-    scanf("%s", input);
+    string input;
+    cout << "Ingrese una cadena: ";
+    cin >> input;
 
-    int valid = simulateTuringMachine(input);
-    strcat(output, valid ? "Cadena ACEPTADA\n" : "Cadena RECHAZADA\n");
+    TuringMachine machine;
+    const bool accepted = machine.simulate(input);
 
-    printf("%s", output);
+    cout << machine.getOutput();
+    cout << (accepted ? "Cadena ACEPTADA\n" : "Cadena RECHAZADA\n");
+
     return 0;
 }
