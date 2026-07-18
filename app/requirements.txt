@@ -1,8 +1,0 @@
-requests
-folium
-pandas==2.2.2
-numpy==1.26.4
-openpyxl
-mangum
-fastapi
-python-multipart
