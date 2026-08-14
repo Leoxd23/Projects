@@ -29,8 +29,3 @@
 - Tecnologías: C++.
 - Ruta: source/repos/PIA_LISTA_35
 
-
-
-## Siguiente paso
-
-Crea un repositorio en GitHub, agrega estos proyectos y sube el README con esta estructura.
