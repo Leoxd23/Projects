@@ -29,13 +29,7 @@
 - Tecnologías: C++.
 - Ruta: source/repos/PIA_LISTA_35
 
-## Recomendación de orden para GitHub
 
-1. Optimización de rutas para florería
-2. Máquina de Turing
-3. Análisis numérico
-4. PIA.avance.1
-5. PIA_LISTA_35
 
 ## Siguiente paso
 
