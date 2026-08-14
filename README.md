@@ -28,4 +28,3 @@
 - Descripción: proyecto de programación con enfoque a resolución de problemas.
 - Tecnologías: C++.
 - Ruta: source/repos/PIA_LISTA_35
-
