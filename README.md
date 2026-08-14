@@ -19,12 +19,4 @@
 - Tecnologías: Python.
 - Ruta: Python projects
 
-### PIA.avance.1
-- Descripción: proyecto de programación aplicada con estructura definida.
-- Tecnologías: C++.
-- Ruta: source/repos/PIA.avance.1
-
-### PIA_LISTA_35
-- Descripción: proyecto de programación con enfoque a resolución de problemas.
-- Tecnologías: C++.
-- Ruta: source/repos/PIA_LISTA_35
+### Several Projects in C, C++ and Phyton
