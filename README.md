@@ -19,4 +19,4 @@
 - Tecnologías: Python.
 - Ruta: Python projects
 
-### Several Projects in Phyton
+### Python
